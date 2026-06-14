@@ -1,0 +1,6 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.csv text eol=crlf
+*.txt text eol=crlf
+*.gitignore text eol=lf
