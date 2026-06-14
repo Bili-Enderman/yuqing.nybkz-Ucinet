@@ -10,6 +10,7 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import os
+import sys
 import re
 import csv
 from collections import defaultdict
@@ -122,6 +123,21 @@ class App:
         self.output_name = tk.StringVar(value="merged")
 
         self._build_ui()
+        self._set_icon()
+
+    # ────────── 图标 ──────────
+
+    def _set_icon(self):
+        try:
+            if getattr(sys, 'frozen', False):
+                base = sys._MEIPASS
+            else:
+                base = os.path.dirname(os.path.abspath(__file__))
+            ico = os.path.join(base, 'icon.ico')
+            if os.path.exists(ico):
+                self.root.iconbitmap(default=ico)
+        except Exception:
+            pass
 
     # ────────── 界面构建 ──────────
 
@@ -209,7 +225,11 @@ class App:
         tk.Label(btn_bar, textvariable=self.status_var,
                  fg="gray").pack(side="right", padx=(10, 0))
 
-    # ────────── 文件操作 ──────────
+        # ── 底部签名 ──
+        tk.Label(self.root, text="by aLICE", fg="lightgray",
+                 font=("", 8)).pack(side="bottom", anchor="sw", padx=12, pady=(0, 4))
+
+    # ──────────
 
     def _add_files(self):
         paths = filedialog.askopenfilenames(
